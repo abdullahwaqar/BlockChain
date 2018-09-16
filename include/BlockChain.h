@@ -11,6 +11,7 @@ class BlockChain {
         Block createGenesisBlock();
         Block getLatestBlock();
         void addBlock(Block);
+        bool isChainValid();
     private:
         std::list<Block> chain;
 };
