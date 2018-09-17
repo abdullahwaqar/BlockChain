@@ -5,7 +5,7 @@ BlockChain :: BlockChain() {
 }
 
 Block BlockChain :: createGenesisBlock() {
-    return Block(10, 2.00, "heloo", "0");
+    return Block(2.00, "heloo", "0");
 }
 
 Block BlockChain :: getLatestBlock() {
@@ -17,6 +17,40 @@ void BlockChain :: addBlock(Block newBlock_) {
     // newBlock_.setHash(newBlock_.calculateHash());
     newBlock_.mineBlock(this->difficulty);
     this->chain.push_back(newBlock_);
+}
+
+void BlockChain :: minePendingTransactions(std::string miningAddress) {
+    std::list<Transaction>::iterator it;
+    for (it = pendingTransactions.begin(); it != pendingTransactions.end(); ++it) {
+        Block newBlock = Block(2.00, std::to_string(it->amount), this->getLatestBlock().getHash());
+        newBlock.mineBlock(difficulty);
+        this->chain.push_back(newBlock);
+    }
+    Transaction t = Transaction("", miningAddress, this->miningReward);
+    this->pendingTransactions.push_back(t);
+}
+
+void BlockChain :: createTransaction(Transaction t) {
+    this->pendingTransactions.push_back(t);
+}
+
+unsigned short int BlockChain :: getBalanceOfAddress(std::string address) {
+    unsigned short int balance = 0;
+    std::list<Block>::iterator itB;
+    std::list<Transaction>::iterator it;
+    for (itB = chain.begin(); itB != chain.end(); ++it) {
+        for (it = this->pendingTransactions.begin(); it != this->pendingTransactions.end(); ++it) {
+            if (it->fromAddress == address) {
+                balance -= it->amount;
+            }
+            if (it->toAddress == address) {
+                balance += it->amount;
+            }
+        }
+
+    }
+    return balance;
+
 }
 
 bool BlockChain :: isChainValid() {

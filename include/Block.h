@@ -8,7 +8,7 @@
 
 class Block {
     public:
-        Block(unsigned short int, float, std::string, std::string);
+        Block(float, std::string, std::string);
         std::string calculateHash();
 
         void setPreviousHash(std::string);
@@ -19,8 +19,7 @@ class Block {
 
         void mineBlock(unsigned short int);
     private:
-        unsigned short int index;
-        std::string previousHash;
+        std::string previousHash = "";
         float timeStamp;
         std::string data;
         std::string hash;

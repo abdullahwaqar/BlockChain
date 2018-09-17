@@ -1,19 +1,21 @@
 #include "include/BlockChain.h"
+#include "include/Transaction.h"
 
 int main() {
     /* Testing the Block Chain */
+
+    // ** Creating Chain Object
     BlockChain bChain;
-    Block b1(14, 23.00, "heloo", "helloooo");
-    Block b2(14, 23.00, "hesdddloo", "helloooo");
 
-    std::cout << "[-] Mining Block 1....\n";
-    bChain.addBlock(b1);
-    std::cout << "[*] Done Mining Block 1....\n";
+    // ** Creating Transactions
+    Transaction t1("address1", "adress2", 200);
+    bChain.createTransaction(t1);
 
-    std::cout << "[-] Mining Block 2....\n";
-    bChain.addBlock(b2);
-    std::cout << "[*] Done Mining Block 2....\n";
+    Transaction t2("address2", "adress1", 500);
+    bChain.createTransaction(t2);
 
-    std::cout << bChain.isChainValid();
+    bChain.minePendingTransactions("idk-adress");
+
+    // std::cout << bChain.getBalanceOfAddress("idk-adress");
     return 0;
 }

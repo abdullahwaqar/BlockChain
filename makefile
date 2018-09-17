@@ -1,5 +1,5 @@
-output: main.o Block.o BlockChain.o
-	g++ main.o Block.o BlockChain.o -o main && make clean
+output: main.o Block.o BlockChain.o Transaction.o
+	g++ main.o Block.o BlockChain.o Transaction.o -o main && make clean
 
 main.o: main.cpp
 	g++ -c  main.cpp
@@ -10,11 +10,8 @@ Block.o: src/Block.cpp include/Block.h
 BlockChain.o: src/BlockChain.cpp include/BlockChain.h
 	g++ -c  src/BlockChain.cpp
 
-# Http.o: source/Http.cpp include/Http.h
-# 	g++ -c  source/Http.cpp
-
-# Server.o: source/Server.cpp include/Server.h
-# 	g++ -c  source/Server.cpp
+Transaction.o: src/Transaction.cpp include/Transaction.h
+	g++ -c  src/Transaction.cpp
 
 clean:
 	rm *.o
