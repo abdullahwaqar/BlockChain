@@ -5,7 +5,7 @@ Block :: Block(unsigned short int index_, float time_, std::string data_, std::s
 }
 
 std::string Block :: calculateHash() {
-    std::string src_str = std::to_string(index) + previousHash + std::to_string(timeStamp) + data;
+    std::string src_str = std::to_string(index) + previousHash + std::to_string(timeStamp) + data + std::to_string(nonce);
 
     std::vector<unsigned char> hash(picosha2::k_digest_size);
     picosha2::hash256(src_str.begin(), src_str.end(), hash.begin(), hash.end());
@@ -21,3 +21,14 @@ std::string Block :: getPreviousHash() { return previousHash; }
 void Block :: setHash(std::string hash_) { hash = hash_; }
 
 std::string Block :: getHash() { return hash; }
+
+void Block :: mineBlock(unsigned short int difficulty) {
+    // std::string array[difficulty + 1];
+    std::string array = "";
+    for (int i = 0; i < difficulty; i++)
+        array += "0";
+    while (this->hash.substr(0, difficulty) != array) {
+        this->nonce++;
+        this->hash = this->calculateHash();
+    }
+}

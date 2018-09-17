@@ -14,7 +14,8 @@ Block BlockChain :: getLatestBlock() {
 
 void BlockChain :: addBlock(Block newBlock_) {
     newBlock_.setPreviousHash(this->getLatestBlock().getHash());
-    newBlock_.setHash(newBlock_.calculateHash());
+    // newBlock_.setHash(newBlock_.calculateHash());
+    newBlock_.mineBlock(this->difficulty);
     this->chain.push_back(newBlock_);
 }
 
@@ -22,8 +23,8 @@ bool BlockChain :: isChainValid() {
     std::cout << this->chain.size() << "\n \n";
     std::list<Block>::iterator it;
     for (it = std::next(chain.begin()); it != chain.end(); ++it) {
-        // std::cout << it->getPreviousHash() << "\n \n";
-        // std::cout << it->getHash() << "\n \n";
+        std::cout << it->getPreviousHash() << "\n \n";
+        std::cout << it->getHash() << "\n \n";
         const auto currentBlock = it;
         const auto previousBlock = std::prev(it);
         if (currentBlock->getHash() != currentBlock->calculateHash()) {

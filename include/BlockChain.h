@@ -14,6 +14,7 @@ class BlockChain {
         bool isChainValid();
     private:
         std::list<Block> chain;
+        unsigned short int difficulty = 4;
 };
 
 #endif //BLOCKCHAIN_H
